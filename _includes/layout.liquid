@@ -4,6 +4,24 @@ title: 11ty Boilerplate
 
 <!DOCTYPE html>
 <html lang="en">
+<script type="module">
+import { createClient } from '@supabase/supabase-js'
+const supabaseUrl = 'https://evbppvhchqesxxsennem.supabase.co'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2YnBwdmhjaHFlc3h4c2VubmVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTA0Mzc3MTAsImV4cCI6MjAyNjAxMzcxMH0.UaIB4s7vHLzgfV0uwRF761VyCh8sjuyxZqZq_13aEWM'
+const supabase = createClient(supabaseUrl, supabaseKey)
+
+
+let { data: books, error } = await supabase
+  .from('books')
+  .select('*')
+
+for (let book of books){
+  let bookList = document.getElementById('books');
+  bookList.innerHTML += `<li>${book.title}</li>`;
+}
+
+</script>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,11 +29,6 @@ title: 11ty Boilerplate
   <link rel="stylesheet" href="/styles/screen.css">
 </head>
 <body>
-  <nav>
-    <ul>
-      <li><a href="/" title="Go home">Home</a></li>
-      <li><a href="/about/" title="About the boilerplate">About</a></li>
-    </ul>
   </nav>
     {{ content }}
 </body>
